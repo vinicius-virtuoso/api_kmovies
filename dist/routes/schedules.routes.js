@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.schedulesRouter = void 0;
+const validateToken_middleware_1 = require("./../middlewares/auth/validateToken.middleware");
+const validateBody_middleware_1 = require("./../middlewares/body/validateBody.middleware");
+const express_1 = require("express");
+const schedules_schema_1 = require("./../schemas/schedules.schema");
+const schedules_controller_1 = require("../controllers/schedules.controller");
+const middlewares_1 = require("../middlewares");
+exports.schedulesRouter = (0, express_1.Router)();
+exports.schedulesRouter.get('/realEstate/:realEstateId', validateToken_middleware_1.validateToken, middlewares_1.verifyIsAdmin, middlewares_1.verifyRealEstateExistsParams, schedules_controller_1.schedulesController.scheduleRs);
+exports.schedulesRouter.post('/', validateToken_middleware_1.validateToken, (0, validateBody_middleware_1.validateBody)(schedules_schema_1.scheduleCreateSchema), middlewares_1.verifyRealEstateExists, middlewares_1.verifyExistScheduleRs, middlewares_1.verifyScheduleExists, middlewares_1.verifyHoursIsValid, middlewares_1.verifyDayIsValid, schedules_controller_1.schedulesController.create);

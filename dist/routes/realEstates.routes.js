@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.realEstateRouter = void 0;
+const express_1 = require("express");
+const verifyAddressExists_middleware_1 = require("../middlewares/address/verifyAddressExists.middleware");
+const verifyIsAdmin_middleware_1 = require("../middlewares/admin/verifyIsAdmin.middleware");
+const validateToken_middleware_1 = require("../middlewares/auth/validateToken.middleware");
+const realEstate_controller_1 = require("../controllers/realEstate.controller");
+const middlewares_1 = require("../middlewares");
+const schemas_1 = require("../schemas");
+exports.realEstateRouter = (0, express_1.Router)();
+exports.realEstateRouter.get('/', realEstate_controller_1.realEstateController.list);
+exports.realEstateRouter.post('/', (0, middlewares_1.validateBody)(schemas_1.realEstateCreateSchema), validateToken_middleware_1.validateToken, verifyIsAdmin_middleware_1.verifyIsAdmin, verifyAddressExists_middleware_1.verifyAddressExists, realEstate_controller_1.realEstateController.create);

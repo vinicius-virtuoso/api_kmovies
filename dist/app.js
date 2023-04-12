@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+require("express-async-errors");
+const schedules_routes_1 = require("./routes/schedules.routes");
+const users_routes_1 = require("./routes/users.routes");
+const express_1 = __importDefault(require("express"));
+const errors_1 = require("./errors");
+const login_routes_1 = require("./routes/login.routes");
+const categories_routes_1 = require("./routes/categories.routes");
+const realEstates_routes_1 = require("./routes/realEstates.routes");
+const app = (0, express_1.default)();
+app.use(express_1.default.json());
+app.use('/users', users_routes_1.usersRouter);
+app.use('/login', login_routes_1.loginRouter);
+app.use('/categories', categories_routes_1.categoriesRouter);
+app.use('/realEstate', realEstates_routes_1.realEstateRouter);
+app.use('/schedules', schedules_routes_1.schedulesRouter);
+app.use(errors_1.errorHandler);
+exports.default = app;

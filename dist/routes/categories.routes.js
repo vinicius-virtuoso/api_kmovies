@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.categoriesRouter = void 0;
+const categories_controller_1 = require("./../controllers/categories.controller");
+const express_1 = require("express");
+const middlewares_1 = require("../middlewares");
+const schemas_1 = require("../schemas");
+const verifyCategorieNotExists_middleware_1 = require("../middlewares/categorie/verifyCategorieNotExists.middleware");
+exports.categoriesRouter = (0, express_1.Router)();
+exports.categoriesRouter.post('/', (0, middlewares_1.validateBody)(schemas_1.categorieCreateSchema), middlewares_1.validateToken, middlewares_1.verifyIsAdmin, middlewares_1.verifyCategorieExists, categories_controller_1.categoriesController.create);
+exports.categoriesRouter.get('/', categories_controller_1.categoriesController.list);
+exports.categoriesRouter.get('/:categoryId/realEstate', verifyCategorieNotExists_middleware_1.verifyCategorieNotExists, categories_controller_1.categoriesController.listRealEstate);
